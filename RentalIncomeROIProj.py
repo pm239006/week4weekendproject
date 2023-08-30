@@ -42,9 +42,33 @@ class User():
         else:
             print("This property is not in your list! ") #404 not found
 
+                    # ADD NEW PROPERTY TO LIST 
+    def add_property(self):
+        print("/n Okay, we will now collect all data needed to proceed...")
+        property_address = input("What is the address of the home?")
+        price = input("What is the price of the home? ")
+        sq_feet = input("How many square feet is the home?  ")
+        apt_units = input("How many apartment units does the home have?  ")
+        bathrooms = input("How many bathrooms does the home have?  ")
+        bedrooms = input("How many bedrooms does the home have?  ")
+
+        prop = Property(price, property_address, sq_feet, apt_units, bedrooms, bathrooms)
+        self.property_list.append(prop)
+
+        print(f"Your property at {property_address.title()} is now in your property list")
+    def disp_props(self):
+        for p in self.property_list:
+            p.display_property()
+
 # property class
 class Property():
-    def __init__(self):
+    def __init__(self, price, property_address, sq_feet, apt_units, bedrooms, bathrooms):
+        self.price = price
+        self.property_address = property_address
+        self.sq_feet = sq_feet
+        self.apt_units = apt_units 
+        self.bedrooms = bedrooms
+        self.bathrooms = bathrooms
         roi = None
 
                 # ADD NEW PROPERTY TO LIST 
@@ -65,18 +89,18 @@ class Property():
         self.bathrooms = bathrooms
 
 
-        print(f"Your property at {property_address.title} is now in your property list")
+        print(f"Your property at {property_address.title()} is now in your property list")
 
 
 
             
-    def display_properties(self):
+    def display_property(self):
             print("PROPERTY DETAILS")
             print("_________________")
-            print(f"square footage: {self.square_feet}")
+            print(f"square footage: {self.sq_feet}")
             print(f"bedrooms: {self.bedrooms}")
             print(f"bathrooms: {self.bathrooms}")
-            print()
+
        
     def collect_big_expenses(self):
         print(" This section pertains to the one time expenses for the home (Such as closing fees, down payment, etc .. ) ")
@@ -115,7 +139,7 @@ class Property():
                 break
         print(f"Your total income is ${income}.00")
 
-    def calc_roi(self,income,expenses):
+    def calc_roi(self,income):
 
         monthly_cash_flow = float(income - self.total_monthly_expenses)
         annual_cash_flow =  (monthly_cash_flow) * 12 
@@ -141,8 +165,8 @@ class Runner():
             user = User(username, password)
             self.users.append(user)
             print(f"Perfect! {user} has been created")   
-            user_class = User(username, password) 
-            property = Property()  
+            # user_class = User(username, password) 
+            # property = Property()  
 
             self.current_user = user
         
@@ -192,7 +216,7 @@ class Runner():
                 self.logout()
             elif to_do.lower() == "view":
                 if self.current_user:
-                    self.current_user.display_properties()
+                    self.current_user.disp_props()
                 else:
                     print("Please log in. You are not currently signed in")
 
